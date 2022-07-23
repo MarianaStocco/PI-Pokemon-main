@@ -23,7 +23,7 @@ const getPokemonApi = async () => {
                       speed: e.stats[5].base_stat,
                       height: e.height,
                       weight: e.weight,
-                      sprite: e.sprites.other.dream_world.front_default,
+                      sprite: e.sprites.other["official-artwork"].front_default,
                       types: e.types.length < 2 ? [{name: e.types[0].type.name}] : [{name: e.types[0].type.name}, {name: e.types[1].type.name}]
                   })
               })
@@ -39,9 +39,12 @@ const getPokemonApi = async () => {
 const getPokemonDb = async () => {
   try {
       return await Pokemon.findAll({
+      
+     /* Incluido el modelo Tipos y solo devolviendo el atributo de nombre. */
           include: {
               model: Tipos,
               attributes: ['name'],
+             
               through: {
                   attributes: []
               }
