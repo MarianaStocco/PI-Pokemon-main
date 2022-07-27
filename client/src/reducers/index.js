@@ -24,6 +24,11 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 pokemons: typeFiltered
             }
+        case 'GET_TYPES':
+            return {
+                ...state,
+                types: action.payload
+            }    
         case 'CREATED_DB':
             const pokemonAll = state.allPokemons
             const createdInDb = action.payload === 'creados' ? 
@@ -92,8 +97,18 @@ function rootReducer(state = initialState, action) {
         case 'RESET_DETAIL':
             return {
                ...state,
-               detail: action.payload
-            }             
+               detail: []
+            }  
+        case 'GET_POKEMON_NAME':
+        return{
+            ...state,
+            pokemons: action.payload
+        }    
+        case 'CREATE_POKEMON' :
+            return {
+                ...state,
+                pokemons: action.payload,
+            }
 
         default:
             return state;

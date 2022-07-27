@@ -1,12 +1,17 @@
 import React from 'react';
-
+import s from './card.module.css'
 
 export default function Card({ name, sprite, types }) {
     return (
-        <div>
-            <img src={sprite} alt='img pokemon' width="200px" height="230px" />
-            <h2>{name}</h2>
-            <h5>{types}</h5>
+
+            <div className={s.pokemon}>
+        <div className={s.pokemon_container}>
+            <div className={s.image_container}>
+            <img className={s.pokemon_image} src={sprite} alt='img pokemon' width="250px" height="250px" />
+            </div>
+            <h3 className={s.pokemon_name}>{name}</h3>
+            <ul className={s.pokemon_types}>{types}</ul>
         </div>
+            </div>
     );
 };

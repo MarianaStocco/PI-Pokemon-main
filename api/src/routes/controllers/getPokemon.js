@@ -16,7 +16,7 @@ const getPokemonApi = async () => {
               pokemon.map(e => {
                   info.push({
                       id: e.id,
-                      name: e.name,
+                      name: e.name.charAt(0).toUpperCase() + e.name.slice(1),
                       hp: e.stats[0].base_stat,
                       attack: e.stats[1].base_stat,
                       defense: e.stats[2].base_stat,
@@ -24,7 +24,7 @@ const getPokemonApi = async () => {
                       height: e.height,
                       weight: e.weight,
                       sprite: e.sprites.other["official-artwork"].front_default,
-                      types: e.types.length < 2 ? [{name: e.types[0].type.name}] : [{name: e.types[0].type.name}, {name: e.types[1].type.name}]
+                      types: e.types.length < 2 ? [{name: e.types[0].type.name.charAt(0).toUpperCase() + e.types[0].type.name.slice(1)}] : [{name: e.types[0].type.name.charAt(0).toUpperCase() + e.types[0].type.name.slice(1) + ', '}, {name: e.types[1].type.name.charAt(0).toUpperCase() + e.types[0].type.name.slice(1)}]
                   })
               })
               return info;

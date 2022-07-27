@@ -4,14 +4,16 @@ import { Link, useParams } from 'react-router-dom';
 import { getPokemonDetail, resetDetail } from '../../actions';
 
 
-export default function Details(props) {
-    console.log(props);
+export default function Details() {
+    
     const dispatch = useDispatch();
+    const {id} = useParams();
+
 
     useEffect(() => {
-        dispatch(getPokemonDetail(props.match.params.id));
+        dispatch(getPokemonDetail(id));
         dispatch(resetDetail());
-    }, [dispatch]);
+    }, [dispatch, id]);
 
 
 const pokeDetail = useSelector((state) => state.detail)
@@ -32,11 +34,11 @@ return (
             </button>
         </div>
 
-    <div>
-        {pokeDetail.length > 0 ?
+       <div>
+        {Object.keys(pokeDetail).length > 0 ?
             <div>
                 <h1>{pokeDetail[0].name}</h1>
-                <img src={pokeDetail[0].sprite} alt='' width='200px' height='250px' />
+                <img src={pokeDetail[0].sprite} alt='' width='250px' height='250px' />
                 <h3>Types: {pokeDetail[0].types.map(e => e.name + (' '))}</h3>
                 <h4>Id: {pokeDetail[0].id}</h4>
                 <h4>Hp: {pokeDetail[0].hp}</h4>

@@ -1,19 +1,35 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPokemon, filterPokemonsByType, filterCreatedDB, filterAttack, filterAlphabetical } from '../../actions';
+import {
+    getPokemon,
+    getPokemonTypes,
+    filterCreatedDB,
+    filterAttack,
+    filterAlphabetical,
+    getPokemonName
+} from '../../actions';
 import { Link } from 'react-router-dom';
 import Card from '../card/Card';
 import Paging from '../paging/Paging';
+import SearchBar from '../searchBar/SearchBar';
+import styles from './home.module.css'
+
+
 
 
 
 export default function Home() {
     const dispatch = useDispatch();
-    const allPokemon = useSelector((state) => state.pokemons); // trae del reducer el estado de todos los pokemon
+    const allPokemon = useSelector((state) => state.pokemons);
+    const types = useSelector((state)=> state.types) // trae del reducer el estado de todos los pokemon
     console.log(allPokemon);
+
+    /* Un gancho de reacción. Es una función que le permite "engancharse" a las características de
+    estado y ciclo de vida de React desde los componentes de la función. */
     const [order, setOrder] = useState('');
     const [attack, setAttack] = useState('');
+
     const [currentPage, setCurrentPage] = useState(1);// guardar en estado local la página actual
     const [pokemonPerPage, setPokemonPerPage] = useState(12);// setear el 12 la cantidad de pokemon por página.
     const indexLastPokemon = currentPage * pokemonPerPage;
@@ -39,7 +55,7 @@ export default function Home() {
 
     function handleTypes(e) {
         e.preventDefault();
-        dispatch(filterPokemonsByType(e.target.value));
+        dispatch(getPokemonTypes(e.target.value));
         setCurrentPage(1)
     }
 
@@ -65,72 +81,97 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <div className={styles.body}>
             <Link to='/pokemon'>Crear Pokemon</Link>
-            <h1>POKEMON</h1>
-            <button onClick={e => { handleClick(e) }}>
-                Recargar
-            </button>
-            <div>
-                <select onChange={e => { handleFilterAlphabetical(e) }}>
-                    <option value='a-z'>A-Z</option>
-                    <option value='z-a'>Z-A</option>
-                </select>
-                <>
-                    {/* <select onChange={e => { handleTypes(e) }}>
-                        // 
-                    {pokemonTypes && pokemonTypes.map(type => {
-                        return (
-                            <option>{type}</option>
-                        )
-                    })}
-                </select> */}
-                </>
+            <nav >
 
-                <select onChange={e => { handleTypes(e) }}>
-                    <option value='todos'>Todos</option>
-                    <option value='normal'>Normal</option>
-                    <option value='fighting'>Lucha</option>
-                    <option value='flying'>Volador</option>
-                    <option value='poison'>Veneno</option>
-                    <option value='ground'>Tierra</option>
-                    <option value='rock'>Roca</option>
-                    <option value='bug'>Bicho</option>
-                    <option value='ghost'>Fantasma</option>
-                    <option value='steel'>Acero</option>
-                    <option value='fire'>Fuego</option>
-                    <option value='water'>Agua</option>
-                    <option value='grass'>Planta</option>
-                    <option value='electric'>Eléctrico</option>
-                    <option value='psychic'>Psíquico</option>
-                    <option value='ice'>Hielo</option>
-                    <option value='dragon'>Dragón</option>
-                    <option value='dark'>Siniestro</option>
-                    <option value='fairy'>Hada</option>
-                    <option value='shadow'>Oscuro</option>
-                    <option value='unknown'>Desconocido</option>
-                </select>
+                <div  className={styles.nav} >
+                    <div className={styles.navContainer}>
+                        <span >POKE</span>
+                        <span >App</span>
+                    </div>
 
-                <select onChange={e => { handleFilterAttack(e) }}>
-                    <option value='mayor'>Mayor ataque</option>
-                    <option value='menor'>Menor ataque</option>
-                </select>
+                    <div>
+                        <div className={styles.navContainer}>
+                            <button onClick={e => { handleClick(e) }}>
+                                Recargar
+                            </button>
+                        </div>
+                        <div className={styles.navContainer}>
+                            <select onChange={e => { handleFilterAlphabetical(e) }}>Orden alfabético
+                                <option type= 'checkbox' value='a-z'>A-Z</option>
+                                <option type= 'checkbox' value='z-a'>Z-A</option>
+                            </select>
 
-                <select onChange={e => { handleFilterCreatedInDb(e) }}>
-                    <option value='todos'>Todos</option>
-                    <option value='creados'>Creados</option>
-                    <option value='existentes'>Existentes</option>
-                </select>
-                <Paging
-                    pokemonPerPage={pokemonPerPage}
-                    allPokemon={allPokemon.length}
-                    paging={paging}
-                />
-                <div>
+                            {/* <select onChange={e => { handleTypes(e) }}>
+                       
+                                {pokemonTypes && pokemonTypes.map(type => {
+                                    return (
+                                        <option>{type}</option>
+                                    )
+                                })}
+                            </select> */}
+
+                        </div>
+                        <div className={styles.navContainer}>
+                            <SearchBar />
+                        </div>
+                        <div className={styles.navContainer}>
+                            <div className={styles.filterContainer}>
+
+                                <select className={styles.filter} onChange={e => { handleTypes(e) }} >
+                                    <option value='todos'>Todos</option>
+                                    <option value='normal'>Normal</option>
+                                    <option value='fighting'>Lucha</option>
+                                    <option value='flying'>Volador</option>
+                                    <option value='poison'>Veneno</option>
+                                    <option value='ground'>Tierra</option>
+                                    <option value='rock'>Roca</option>
+                                    <option value='bug'>Bicho</option>
+                                    <option value='ghost'>Fantasma</option>
+                                    <option value='steel'>Acero</option>
+                                    <option value='fire'>Fuego</option>
+                                    <option value='water'>Agua</option>
+                                    <option value='grass'>Planta</option>
+                                    <option value='electric'>Eléctrico</option>
+                                    <option value='psychic'>Psíquico</option>
+                                    <option value='ice'>Hielo</option>
+                                    <option value='dragon'>Dragón</option>
+                                    <option value='dark'>Siniestro</option>
+                                    <option value='fairy'>Hada</option>
+                                    <option value='shadow'>Oscuro</option>
+                                    <option value='unknown'>Desconocido</option>
+                                </select>
+                            </div>
+                            <div className={styles.filterContainer}>
+                                <select className={styles.filter} onChange={e => { handleFilterAttack(e) }}>
+                                    <option value='mayor'>Mayor ataque</option>
+                                    <option value='menor'>Menor ataque</option>
+                                </select>
+                            </div>
+                            <div className={styles.filterContainer}>
+                                <select className={styles.filter} onChange={e => { handleFilterCreatedInDb(e) }}>
+                                    <option value='todos'>Todos</option>
+                                    <option value='creados'>Creados</option>
+                                    <option value='existentes'>Existentes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+
+                            <Paging
+                                pokemonPerPage={pokemonPerPage}
+                                allPokemon={allPokemon.length}
+                                paging={paging}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.cardContainer}>
                     {currentPokemon ? currentPokemon.map((e) => {
                         return (
-                            <div className='cards'>
-                                <Link to={'/pokemons/' + e.id}>
+                            <div className={styles.pokemon}>
+                                <Link  to={'/details/' + e.id}>
                                     <Card
                                         name={e.name}
                                         types={e.types.map(el => el.name + (' '))}
@@ -141,8 +182,8 @@ export default function Home() {
                             </div>
                         );
                     }) :
-                        <div>
-                            <Link to={'/pokemons/' + allPokemon.id}>
+                        <div className={styles.pokemon}>
+                            <Link to={'/details/' + allPokemon.id}>
                                 <Card
                                     name={allPokemon.name}
                                     types={allPokemon.types.map(el => el.name + (' '))}
@@ -153,7 +194,7 @@ export default function Home() {
                         </div>
                     }
                 </div>
-            </div>
+            </nav>
         </div>
     )
 }

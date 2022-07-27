@@ -1,38 +1,60 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.messages {
+  position: absolute;
+  bottom: 0;
+  right: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-flow: column;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  list-style: none;
 }
 
-.App-link {
-  color: #61dafb;
+.message {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  position: relative;
+  z-index: 100;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  color: #fff;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.error::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #2e2e2e;
+}
+
+.error::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background-color: #622;
+  transition: all 0.25s;
+}
+
+.message:hover::after {
+  width: 100%;
+}
+
+.message .title {
+  color: #fff;
+}
+
+.message p {
+  margin: 0.25rem 0 0 0;
+  color: #aaa;
 }
