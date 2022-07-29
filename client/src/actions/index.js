@@ -29,6 +29,7 @@ export function getPokemonTypes() {
     return async (dispatch) => {
         try {
             var pokemonTypes = await axios('http://localhost:3001/types');
+            console.log(pokemonTypes);
             return dispatch({
                 type: GET_TYPES,
                 payload: pokemonTypes.data
@@ -73,9 +74,12 @@ export function filterAlphabetical(payload) {
 }
 
 export function getPokemonDetail(id) {
+    console.log(id, 'soy el ID del poke');
     return async function(dispatch) {
         try {
             var json = await axios.get(`http://localhost:3001/pokemons/${id}`);
+            console.log(json, 'soy el detalle del  POKE');
+
             return dispatch({
                 type: GET_POKEMON_DETAIL,
                 payload: json.data

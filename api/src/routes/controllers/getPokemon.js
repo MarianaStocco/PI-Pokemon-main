@@ -1,4 +1,4 @@
-const { Pokemon, Tipos } = require('../../db');
+const { Pokemon, Types } = require('../../db');
 const axios = require('axios')
 
 
@@ -24,7 +24,7 @@ const getPokemonApi = async () => {
                       height: e.height,
                       weight: e.weight,
                       sprite: e.sprites.other["official-artwork"].front_default,
-                      types: e.types.length < 2 ? [{name: e.types[0].type.name.charAt(0).toUpperCase() + e.types[0].type.name.slice(1)}] : [{name: e.types[0].type.name.charAt(0).toUpperCase() + e.types[0].type.name.slice(1) + ', '}, {name: e.types[1].type.name.charAt(0).toUpperCase() + e.types[0].type.name.slice(1)}]
+                      types: e.types.length < 2 ? [{name: e.types[0].type.name}] : [{name: e.types[0].type.name}, {name: e.types[1].type.name}]
                   })
               })
               return info;
@@ -42,7 +42,7 @@ const getPokemonDb = async () => {
       
      /* Incluido el modelo Tipos y solo devolviendo el atributo de nombre. */
           include: {
-              model: Tipos,
+              model: Types,
               attributes: ['name'],
              
               through: {

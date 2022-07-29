@@ -1,0 +1,9 @@
+.paginate{
+    display: flex;
+    justify-content: space-around ;
+    width: 8rem;
+    background-color: aqua;
+}
+.btn{
+    width: 1rem;
+}

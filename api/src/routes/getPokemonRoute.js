@@ -1,5 +1,5 @@
 const Router = require('express');
-const { Pokemon, Tipos } = require('../db')
+const { Pokemon, Types } = require('../db')
 const { getAllPokemon } = require('./controllers/getPokemon')
 const router = Router();
 
@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
                 sprite,
                 createdInDb
             });
-            const createdDb = await Tipos.findAll({
+            const createdDb = await Types.findAll({
                 where: { name: types }
             });
             createdPokemon.addType(createdDb);

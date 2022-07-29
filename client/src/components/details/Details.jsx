@@ -39,7 +39,7 @@ return (
             <div>
                 <h1>{pokeDetail[0].name}</h1>
                 <img src={pokeDetail[0].sprite} alt='' width='250px' height='250px' />
-                <h3>Types: {pokeDetail[0].types.map(e => e.name + (' '))}</h3>
+                <h3>Types: {pokeDetail[0].types ? pokeDetail[0].types.map(e => e.name + (' ')) : pokeDetail[0].Types.map(e => e.name + (' ')) }</h3>
                 <h4>Id: {pokeDetail[0].id}</h4>
                 <h4>Hp: {pokeDetail[0].hp}</h4>
                 <h4>Attack: {pokeDetail[0].attack}</h4>

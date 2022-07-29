@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./styles.module.css"
 
 
 //declaro paginado y traigo propiedades del componente home
@@ -12,16 +13,14 @@ export default function Paging ({pokemonPerPage, allPokemon, paging}){
     }
     return (
                 //mapear el arreglo y devolver el número correspondiente
-        <nav>
-            <ul>
+        <nav className={styles.paginate}>
                 {pageNumbers && pageNumbers.map((number, index) =>{
                     return (
-                  <div key={index}>
-                      <button onClick={()=> paging(number)}>{number}</button>
+                  <div key={index} className={styles.item}>
+                      <button className={styles.btn} onClick={()=> paging(number)}>{number}</button>
                   </div>
                     )
                 })}
-            </ul>
         </nav>
     )
 }

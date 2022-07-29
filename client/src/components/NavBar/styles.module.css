@@ -1,0 +1,39 @@
+.contNav {
+    background-color: rgb(165, 113, 16);
+    width: 100vw;
+    height: 5rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.items {
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.navContainer {
+    width: 20%;
+    display: flex;
+}
+
+.filter {
+    background-color: rgb(196, 196, 38);
+    width: 80%;
+    margin: 0.5rem;
+    height: 2rem;
+    border: none;
+    border-radius: 2rem;
+}
+
+.filter-items div,.filter-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-radius: 1rem;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    user-select: none;
+}
