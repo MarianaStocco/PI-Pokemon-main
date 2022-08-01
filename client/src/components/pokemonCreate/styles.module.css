@@ -53,13 +53,13 @@
 }
 .btn{
     width: 20%;
-    text-transform: uppercase;
     font-size: 1rem;
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-family:"Roboto", sans-serif;
     background-color: rgba(46, 84, 128, 0.89);
     border: 1px solid black ;
     color: white;
     border-radius: 1rem;
+    cursor: pointer;
 }
 .deleteType{
     text-transform: uppercase;

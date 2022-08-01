@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { getPokemon } from "../../actions";
 import SearchBar from "../searchBar/SearchBar";
 import styles from "./styles.module.css"
+import image from '../../assets/logoPoke.png'
 
 const NavBar = ({ search, typesFilter, attackFilter, orderFilter, createdFilter }) => {
     const dispatch = useDispatch();
@@ -14,20 +15,16 @@ const NavBar = ({ search, typesFilter, attackFilter, orderFilter, createdFilter 
     return (
 
         <div className={styles.contNav} >
-            <div className={""}>
-                <span >POKE</span>
-                <span >App</span>
-            </div>
-
+            <img src={image} alt="logo_pokemon" className={styles.img}></img>
             <div className={styles.items}>
 
-                <div className={""}>
+                <div >
                     <select className={styles.filter} onChange={e => { orderFilter(e) }}>Orden alfabético
                         <option type='checkbox' value='a-z'>A-Z</option>
                         <option type='checkbox' value='z-a'>Z-A</option>
                     </select>
 
-                    {/* <select onChange={e => { handleTypes(e) }}>
+                    {/* <select onChange={e => { typesFilter(e) }}>
                        
                                 {types && types.map(type => {
                                     return (

@@ -1,15 +1,16 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from '../landing/landing.module.css'
-
-export default function LandingPage () {
+import pokebola from '../../assets/pokebola.png'
+export default function LandingPage() {
     return (
-        <div className={styles.img}>
-            <div className={styles.container}>
-            <h1>¡Atrápalos a todos!</h1>
-            <Link to = '/pokemons'>
-                <button className={styles.btn}>Entrar</button>
-            </Link>
+        <div  className={styles.container}>
+            <div className={styles.img}>
+                <div className={styles.btnCont}>
+                    <Link className={styles.btn} to='/pokemons'>
+                        <img src={pokebola} className={styles.btn} />
+                    </Link>
+                </div>
             </div>
         </div>
     )

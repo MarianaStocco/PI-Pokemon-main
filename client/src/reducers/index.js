@@ -13,20 +13,18 @@ const initialState = {
 function rootReducer(state = initialState, action) {
     switch (action.type) {
         case 'GET_POKEMON':
+            console.log(state.allPokemons);
             return {
                 ...state,
                 pokemons: action.payload,
-                allPokemons: action.payload
+                allPokemons: action.payload,
             }
         case 'FILTER_BY_TYPE':
-                const typeFiltered = action.payload === 'todos'
-                ? state.allPokemons 
-                : state.allPokemons.filter(
-                    ((e) => 
-                     e.types.filter((e)=> e.name === action.payload).length))
-                    //  e.types.map(e => e.name)[0] === action.payload || e.types.map(e => e.name)[1] === action.payload))
-            // console.log(typeFiltered.filter(e => console.log(e.types)))
-            return {
+            const allPokes = state.allPokemons;
+            const typeFiltered = action.payload === "todos" ? allPokes :
+            allPokes.filter( pt => pt.types.map( pt => pt.name ).includes( action.payload ))
+            console.log(typeFiltered, 'soy el filter_by_type');
+            return{
                 ...state,
                 pokemons: typeFiltered
             }
@@ -113,7 +111,6 @@ function rootReducer(state = initialState, action) {
         case 'CREATE_POKEMON':
             return {
                 ...state,
-                pokemons: action.payload,
             }
 
         default:

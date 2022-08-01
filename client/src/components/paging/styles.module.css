@@ -2,8 +2,9 @@
     display: flex;
     justify-content: space-around ;
     width: 8rem;
-    background-color: aqua;
+    background-color: transparent;
 }
 .btn{
     width: 1rem;
+    cursor: pointer;
 }
