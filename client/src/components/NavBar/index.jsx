@@ -20,8 +20,8 @@ const NavBar = ({ search, typesFilter, attackFilter, orderFilter, createdFilter 
 
                 <div >
                     <select className={styles.filter} onChange={e => { orderFilter(e) }}>Orden alfabético
-                        <option type='checkbox' value='a-z'>A-Z</option>
-                        <option type='checkbox' value='z-a'>Z-A</option>
+                        <option type='radio' value='a-z'>A-Z</option>
+                        <option type='radio' value='z-a'>Z-A</option>
                     </select>
 
                     {/* <select onChange={e => { typesFilter(e) }}>
@@ -64,8 +64,8 @@ const NavBar = ({ search, typesFilter, attackFilter, orderFilter, createdFilter 
                     </div>
                     <div className={styles.filterContainer}>
                         <select className={styles.filter} onChange={e => { attackFilter(e) }}>
-                            <option value='mayor'>Mayor ataque</option>
-                            <option value='menor'>Menor ataque</option>
+                            <option value='mayor'>+ ataque</option>
+                            <option value='menor'>- ataque</option>
                         </select>
                     </div>
                     <div className={styles.filterContainer}>

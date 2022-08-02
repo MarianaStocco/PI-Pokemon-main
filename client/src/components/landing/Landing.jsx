@@ -8,7 +8,7 @@ export default function LandingPage() {
             <div className={styles.img}>
                 <div className={styles.btnCont}>
                     <Link className={styles.btn} to='/pokemons'>
-                        <img src={pokebola} className={styles.btn} />
+                        <img src={pokebola} alt='pokebola' className={styles.btn} />
                     </Link>
                 </div>
             </div>

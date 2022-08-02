@@ -7,17 +7,8 @@ import {
 } from "../../actions";
 import styles from "./styles.module.css"
 
-function validate(input) {
-    let errors = {};
-    if (!input.name) {
-        errors.name = 'Name must be completed';
-        console.log(errors);
-    }
-    return errors;
-}
 
 export default function PokemonCreate() {
-    const navigate = useHistory()
     const dispatch = useDispatch()
     const history = useHistory()
     const tipos = useSelector((state) => state.types)
@@ -34,7 +25,41 @@ export default function PokemonCreate() {
         sprite: "",
         types: []
     })
-    console.log(input);
+    // console.log(input);
+    function isNumber(n) {
+        if (/^\d+$/.test(n)) {
+            return true;
+        }
+        return false;
+    }
+
+    function isString(n) {
+        if (/^\D+$/.test(n)) {
+            return true;
+        }
+        return false;
+    }
+
+    function validate(input) {
+        let errors = {};
+        if (!input.name) {
+            errors.name = 'Debes completar el nombre';
+            console.log(errors);
+        } else if (!isString(input.name)) errors.name = 'Solo letras!';
+        else if (!input.hp) errors.hp = 'Falta completar';
+        else if (!isNumber(input.hp)) errors.hp = 'Solo números!';
+        else if (!input.attack) errors.attack = 'Falta completar';
+        else if (!isNumber(input.attack)) errors.attack = 'Solo números!';
+        else if (!input.defense) errors.defense = 'Falta completar';
+        else if (!isNumber(input.defense)) errors.defense = 'Solo números!';
+        else if (!input.speed) errors.speed = 'Falta completar';
+        else if (!isNumber(input.speed)) errors.speed = 'Solo números!';
+        else if (!input.height) errors.height = 'Falta completar';
+        else if (!isNumber(input.height)) errors.height = 'Solo números!';
+        else if (!input.weight) errors.weight = 'Falta completar';
+        else if (!isNumber(input.weight)) errors.weight = 'Solo números!';
+        return errors;
+    }
 
     function handleChange(e) {
         setInput({
@@ -51,7 +76,7 @@ export default function PokemonCreate() {
         input.types.length < 2 && !input.types.includes(e.target.value) ? setInput({
             ...input,
             types: [...input.types, e.target.value]
-        }) : alert('Maximum two types')
+        }) : alert('Maximo dos tipos!')
     }
 
     function handleSubmit(e) {
@@ -88,7 +113,7 @@ export default function PokemonCreate() {
     return (
         <div className={styles.cont}>
             <h1 className={styles.h1}>Crea tu Pokemon</h1>
-            <form className={styles.form}  onSubmit={(e) => handleSubmit(e)}>
+            <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
                 <div className={styles.inputCont}>
                     <label htmlFor="name">Nombre: </label>
                     <input
@@ -108,7 +133,6 @@ export default function PokemonCreate() {
                     <label htmlFor="hp">Hp: </label>
                     <input
                         className={styles.input}
-
                         type="number"
                         value={input.hp}
                         name="hp"
@@ -116,6 +140,9 @@ export default function PokemonCreate() {
                         onChange={(e) => handleChange(e)}
                         required
                     />
+                    {errors.hp && (
+                        <p>{errors.hp}</p>
+                    )}
                 </div>
                 <div className={styles.inputCont}>
                     <label htmlFor="attack">Ataque: </label>
@@ -128,6 +155,9 @@ export default function PokemonCreate() {
                         onChange={(e) => handleChange(e)}
                         required
                     />
+                    {errors.attack && (
+                        <p>{errors.attack}</p>
+                    )}
                 </div>
                 <div className={styles.inputCont}>
 
@@ -141,6 +171,9 @@ export default function PokemonCreate() {
                         onChange={(e) => handleChange(e)}
                         required
                     />
+                    {errors.defense && (
+                        <p>{errors.defense}</p>
+                    )}
                 </div>
                 <div className={styles.inputCont}>
 
@@ -154,6 +187,9 @@ export default function PokemonCreate() {
                         onChange={(e) => handleChange(e)}
                         required
                     />
+                    {errors.speed && (
+                        <p>{errors.speed}</p>
+                    )}
                 </div>
                 <div className={styles.inputCont}>
 
@@ -167,6 +203,9 @@ export default function PokemonCreate() {
                         onChange={(e) => handleChange(e)}
                         required
                     />
+                    {errors.height && (
+                        <p>{errors.height}</p>
+                    )}
                 </div>
                 <div className={styles.inputCont}>
 
@@ -180,6 +219,9 @@ export default function PokemonCreate() {
                         onChange={(e) => handleChange(e)}
                         required
                     />
+                    {errors.weight && (
+                        <p>{errors.weight}</p>
+                    )}
                 </div>
                 <div className={styles.inputCont}>
 
@@ -191,6 +233,7 @@ export default function PokemonCreate() {
                         name="sprite"
                         id="sprite"
                         onChange={(e) => handleChange(e)}
+                        placeholder={("https://...")}
                         required
                     />
                 </div>
@@ -203,9 +246,9 @@ export default function PokemonCreate() {
                         id="types"
                         required>
                         {
-                           tipos?.map((e, index) => {
-                               return ( <option value={e.name} key={index}>{e}</option>)
-                           })
+                            tipos?.map((e, index) => {
+                                return (<option value={e.name} key={index}>{e}</option>)
+                            })
                         }
                     </select>
                 </div>
@@ -221,10 +264,10 @@ export default function PokemonCreate() {
                     )}
                 </div>
 
-            <div className={styles.footer}>
-                <button className={styles.btn} onClick={() =>  history.push("/pokemons") }>Volver</button>
-                <button className={styles.btn} type='submit'> Crear</button>
-            </div>
+                <div className={styles.footer}>
+                    <button className={styles.btn} onClick={() => history.push("/pokemons")}>Volver</button>
+                    <button className={styles.btn} type='submit'> Crear</button>
+                </div>
             </form>
 
         </div>
