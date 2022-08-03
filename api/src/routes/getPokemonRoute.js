@@ -35,14 +35,14 @@ router.get('/:id', async (req, res) => {
     }
 })
 router.delete('/:id', async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const allPokemons = await getAllPokemon();
     try {
-        if(id) {
+        if (id) {
             const deletePoke = allPokemons.filter(poke => poke.id == id);
             deletePoke.length ?
-            res.status (200).send('Pokemon eliminado'):
-            res.status(400).send('Error')
+                res.status(200).send('Pokemon eliminado') :
+                res.status(400).send('Error')
         }
     } catch (error) {
         console.log(error);
@@ -50,27 +50,45 @@ router.delete('/:id', async (req, res) => {
 })
 router.post('/', async (req, res) => {
     const { name, hp, attack, defense, speed, height, weight, sprite, createdInDb, types } = req.body;
+    if (!name || !hp || !attack || !defense || !speed || !height || !weight) {
+        console.log(name);
+        return res.status(400).json({ info: `Falta ingresar un dato` });
+    }
+
+    let arrType = [];
+    req.body.types.map(e => arrType.push({ name: e }));
+    if (!arrType.length) {
+        return res.status(400).json({ info: `Debes elegir al menos un tipo` });
+    }
+    console.log(arrType, 'HOLAAA ARRAY DE MI CORAZON');
+
+    const exist = await Pokemon.findOne({ where: { name: req.body.name } });
+    console.log('NO QUIERO QUE SE PIERDA ESTE EXIST', exist);
+
+    if (exist) {
+        console.log('CUALQUIER COSA', exist );
+        return res.status(400).json({ info: "Ya existe un pokemon con ese nombre" });  
+    } 
+
     try {
-        if (name) {
-            const createdPokemon = await Pokemon.create({
-                name,
-                hp,
-                attack,
-                defense,
-                speed,
-                height,
-                weight,
-                sprite,
-                createdInDb
-            });
-            const createdDb = await Types.findAll({
-                where: { name: types }
-            });
-            createdPokemon.addType(createdDb);
-            return res.status(200).send('Pokemon successfully created')
-        } else {
-            return res.status(404).send('Pokemon was not created');
-        }
+
+        const createdPokemon = await Pokemon.create({
+            name,
+            hp,
+            attack,
+            defense,
+            speed,
+            height,
+            weight,
+            sprite,
+            createdInDb
+        });
+        const createdDb = await Types.findAll({
+            where: { name: types }
+        });
+        createdPokemon.addType(createdDb);
+        return res.status(200).send('Pokemon creado!')
+
     } catch (error) {
         console.log(error);
     }

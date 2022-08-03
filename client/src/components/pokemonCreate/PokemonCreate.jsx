@@ -62,6 +62,7 @@ export default function PokemonCreate() {
     }
 
     function handleChange(e) {
+        e.preventDefault()
         setInput({
             ...input,
             [e.target.name]: e.target.value
@@ -73,6 +74,7 @@ export default function PokemonCreate() {
     }
 
     function handleSelect(e) {
+        e.preventDefault()
         input.types.length < 2 && !input.types.includes(e.target.value) ? setInput({
             ...input,
             types: [...input.types, e.target.value]
@@ -81,22 +83,34 @@ export default function PokemonCreate() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch(createPokemon(input))
-        console.log(input)
-        setInput({
-            name: "",
-            hp: "",
-            attack: "",
-            defense: "",
-            speed: "",
-            height: "",
-            weight: "",
-            sprite: "",
-            types: []
-        })
-        history.push('/pokemons')
-        alert("Pokemon created")
-        console.log('HOLAA');
+        if(Object.values(errors).length){
+            let message = {};
+            let err = Object.values(errors);
+            return alert (message = err.map(e => e + '\n'));
+        } else {
+           const { name, hp, attack, defense, speed, height, weight, sprite, types } = input;
+           if (name && hp && attack && defense && speed && height && weight && sprite
+             && types.length !== 0) {
+            dispatch(createPokemon(input));
+                alert("Pokemon creado con exito!");
+            } else {
+                alert("Te falta completar un campo!");
+                history.push('/pokemon')
+            }
+            setInput({
+                name: "",
+                hp: "",
+                attack: "",
+                defense: "",
+                speed: "",
+                height: "",
+                weight: "",
+                sprite: "",
+                types: [],
+            });
+            history.push("/pokemons");
+        }
+             // console.log('HOLAA');
     }
 
     function handleDelete(e) {
@@ -124,6 +138,7 @@ export default function PokemonCreate() {
                         id="name"
                         onChange={(e) => handleChange(e)}
                         required
+                        
                     />
                     {errors.name && (
                         <p>{errors.name}</p>
@@ -244,10 +259,12 @@ export default function PokemonCreate() {
                         className={styles.input}
                         name='types'
                         id="types"
-                        required>
+                        required
+                        >
                         {
                             tipos?.map((e, index) => {
-                                return (<option value={e.name} key={index}>{e}</option>)
+                                return (
+                                <option value={e.name} key={e.id}>{e}</option>)
                             })
                         }
                     </select>

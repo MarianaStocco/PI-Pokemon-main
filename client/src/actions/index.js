@@ -1,14 +1,15 @@
 import axios from 'axios';
-import { GET_POKEMON, 
-         GET_TYPES, 
-         CREATED_DB, 
-         FILTER_ATTACK, 
-         FILTER_ALPHABETICAL, 
-         FILTER_BY_TYPE, 
-         GET_POKEMON_DETAIL, 
-         RESET_DETAIL,
-         GET_POKEMON_NAME,
-       } from '../constants';
+import {
+    GET_POKEMON,
+    GET_TYPES,
+    CREATED_DB,
+    FILTER_ATTACK,
+    FILTER_ALPHABETICAL,
+    FILTER_BY_TYPE,
+    GET_POKEMON_DETAIL,
+    RESET_DETAIL,
+    GET_POKEMON_NAME,
+} from '../constants';
 
 export function getPokemon() {
     return async (dispatch) => {
@@ -25,6 +26,25 @@ export function getPokemon() {
     }
 }
 
+// export function getPokemon() {
+//     return function (dispatch) {
+//         try {
+//             const pokemon = axios.get('http://localhost:3001/pokemons')
+//                 .then((p) => p.json())
+//                 .then(() => {
+//                     return dispatch({
+//                         type: GET_POKEMON,
+//                         payload: pokemon.data
+//                     })
+//                 })
+
+//         } catch (error) {
+
+//         }
+//     }
+// }
+
+
 export function getPokemonTypes() {
     return async (dispatch) => {
         try {
@@ -34,7 +54,7 @@ export function getPokemonTypes() {
                 type: GET_TYPES,
                 payload: pokemonTypes.data
             })
-            
+
         } catch (error) {
             console.log(error);
         }
@@ -75,7 +95,7 @@ export function filterAlphabetical(payload) {
 
 export function getPokemonDetail(id) {
     console.log(id, 'soy el ID del poke');
-    return async function(dispatch) {
+    return async function (dispatch) {
         try {
             var json = await axios.get(`http://localhost:3001/pokemons/${id}`);
             console.log(json, 'soy el detalle del  POKE');
@@ -90,11 +110,11 @@ export function getPokemonDetail(id) {
     }
 }
 
-export function getPokemonName(name){
+export function getPokemonName(name) {
     return async function (dispatch) {
         try {
             const pokeName = await axios.get(`http://localhost:3001/pokemons?name=${name}`);
-            return dispatch ({
+            return dispatch({
                 type: GET_POKEMON_NAME,
                 payload: pokeName.data
             })
@@ -104,15 +124,25 @@ export function getPokemonName(name){
     }
 }
 
+export function getClonePoke(name) {
+    return async function () {
+        const pokeName = await axios.get(`http://localhost:3001/pokemons?name=${name}`);
+        if (!pokeName) {
+            return false
+        }
+        return true
+    }
+}
+
 export function createPokemon(details) {
     return async function (dispatch) {
         try {
             const newPokemon = await axios.post('http://localhost:3001/pokemons', details)
-            return dispatch ({
+            return dispatch({
                 type: 'CREATE_POKEMON',
                 payload: newPokemon.data
             })
-            
+
         } catch (error) {
             console.log(error);
         }
@@ -120,10 +150,16 @@ export function createPokemon(details) {
 
 }
 
-export function resetDetail(payload){
+export function resetDetail(payload) {
     return {
         type: RESET_DETAIL,
         payload
+    }
+}
+
+export function orderFive(){
+    return{
+        type: 'ORDER_FIVE'
     }
 }
 

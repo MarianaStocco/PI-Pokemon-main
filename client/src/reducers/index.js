@@ -38,11 +38,11 @@ function rootReducer(state = initialState, action) {
             const createdInDb = action.payload === 'creados' ?
                 pokemonAll.filter(pokemon => pokemon.createdInDb) :
                 pokemonAll.filter(pokemon => !pokemon.createdInDb)
+                console.log('CREADOS EN BD', createdInDb.length);
             return {
                 ...state,
-                pokemons: action.payload === 'todos' ?
-                    state.allPokemons :
-                    createdInDb
+                pokemons: action.payload === 'todos' ? pokemonAll : createdInDb
+                   
             }
         case 'FILTER_ATTACK':
             let pokemonByAttack = action.payload === 'mayor' ?
@@ -112,6 +112,21 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
             }
+        case 'ORDER_FIVE' :
+            const orderFive = 
+            state.allPokemons.sort( (a, b) =>{
+                if(a.name < b.name){
+                    return -1
+                }
+                if(b.name < a.name){
+                    return 1
+                }
+                return 0
+            })
+            return{
+                ...state,
+                pokemons: orderFive
+            }    
 
         default:
             return state;

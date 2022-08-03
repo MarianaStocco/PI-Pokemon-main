@@ -55,8 +55,9 @@ export default function Home() {
     }
 
     function handleFilterCreatedInDb(e) {
-        // e.preventDefault();
+        e.preventDefault();
         dispatch(filterCreatedDB(e.target.value))
+        setCurrentPage(1)
     }
 
     function handleFilterAttack(e) {

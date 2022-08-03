@@ -12,6 +12,7 @@ const NavBar = ({ search, typesFilter, attackFilter, orderFilter, createdFilter 
         dispatch(getPokemon());
     }, [dispatch])
 
+
     return (
 
         <div className={styles.contNav} >
@@ -75,6 +76,7 @@ const NavBar = ({ search, typesFilter, attackFilter, orderFilter, createdFilter 
                             <option value='existentes'>Existentes</option>
                         </select>
                     </div>
+                 
                 </div>
                 <div onChange={(e) => search(e)} className={""}>
                     <SearchBar />
