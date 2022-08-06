@@ -113,13 +113,15 @@ export function getPokemonDetail(id) {
 export function getPokemonName(name) {
     return async function (dispatch) {
         try {
-            const pokeName = await axios.get(`http://localhost:3001/pokemons?name=${name}`);
-            return dispatch({
-                type: GET_POKEMON_NAME,
-                payload: pokeName.data
-            })
+                const pokeName = await axios.get(`http://localhost:3001/pokemons?name=${name}`);
+                console.log(pokeName.data.name);
+                return dispatch({
+                    type: GET_POKEMON_NAME,
+                    payload: pokeName.data
+                })
+           
         } catch (error) {
-            console.log(error);
+            alert('Debes ingresar el nombre completo!!')
         }
     }
 }
